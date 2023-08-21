@@ -1,0 +1,30 @@
+{
+    "title" : "Finding open ports",
+    "level_type" : "TRAINING_LEVEL",
+    "order" : 2,
+    "estimated_duration" : 10,
+    "minimal_possible_solve_time" : 1,
+    "answer" : null,
+    "answer_variable_name" : "telnet_port",
+    "content" : "Your goal is to get access to the **server**. You know that there is a **telnet** service running on the server but it is not running on the default port. Your first task is to find the **port** on which the telnet service is running. The answer is the port number.\n",
+    "solution" : "1. Look for open ports using the command **`nmap -p- 192.168.20.5`**. You can see **ssh** running on port **22** and some other service running on port **${ANSWER}**. This has to be the **telnet** service.\n\n2. Enter **`${ANSWER}`** as the answer.",
+    "solution_penalized" : true,
+    "hints" : [ {
+      "title" : "Tool to find open ports",
+      "content" : "A common tool to find open ports is **nmap**. You can learn how to use nmap using **`nmap --help`** or by searching online.",
+      "hint_penalty" : 20,
+      "order" : 0
+    } ],
+    "incorrect_answer_limit" : 10,
+    "attachments" : [ ],
+    "max_score" : 50,
+    "variant_answers" : true,
+    "reference_solution" : [ ],
+    "mitre_techniques" : [ {
+      "technique_key" : "TA0007.T1046"
+    }, {
+      "technique_key" : "TA0043.T1595"
+    } ],
+    "expected_commands" : [ "ls", "nmap" ],
+    "commands_required" : true
+}
