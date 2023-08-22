@@ -2,8 +2,5 @@ telnet_port:
     type: port
     min: 1500
 
-Hunghx_flag:
-    type: text
-
-root_flag:
+bruteforce_password:
     type: text
