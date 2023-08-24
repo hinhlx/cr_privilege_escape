@@ -34,8 +34,8 @@
           "points": 100,
           "penalty": 0,
           "order": 0,
-          "answer_required": true
-          "correct_answer": "viettel@123"
+          "answer_required": true,
+          "correct_answer": "viettel@123",
         }
       ],
       "instructions": "Please answer the question with the password you successfully found using the bruteforce attack.",
