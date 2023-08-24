@@ -22,24 +22,26 @@
       "commands_required": true
     },
     {
-      "title": "Enter Found Password",
-      "level_type": "QUESTION_LEVEL",
+      "title": "Submit Bruteforce Result",
+      "level_type": "ASSESSMENT_LEVEL",
       "order": 1,
-      "estimated_duration": 10,
-      "minimal_possible_solve_time": 1,
+      "estimated_duration": 5,
+      "minimal_possible_solve_time": null,
       "questions": [
         {
-          "question_type": "SAQ",
-          "text": "Enter the password you found through the bruteforce attack.",
+          "question_type": "FFQ",
+          "text": "What is the password you successfully found using the bruteforce attack?",
           "points": 100,
           "penalty": 0,
           "order": 0,
-          "answer_required": true,
-          "correct_answers": ["viettel@123"]
+          "answer_required": true
         }
-      ]
+      ],
+      "instructions": "Please answer the question with the password you successfully found using the bruteforce attack.",
+      "assessment_type": "QUESTIONNAIRE"
     }
   ],
-  "estimated_duration": 40,
+  "estimated_duration": 35,
   "variant_sandboxes": false
+  "expected_answer": "viettel@123"
 }
