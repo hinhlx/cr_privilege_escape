@@ -10,26 +10,36 @@
       "title": "Bruteforce Attack",
       "level_type": "TRAINING_LEVEL",
       "order": 0,
-      "estimated_duration": 15,
+      "estimated_duration": 30,
       "minimal_possible_solve_time": 10,
       "answer_variable_name": "bruteforce_password",
       "content": "In this level, your task is to perform a bruteforce attack to guess the password of the target user. The answer is the correct password you find.",
       "solution": "Use a tool like 'hydra' to perform a dictionary attack on the target service with the desired username. For example: 'hydra -l target_user -P wordlist.txt target_service://target_ip:target_port'.",
-      "hints": [
-        {
-          "title": "Using hydra for bruteforce",
-          "content": "Hydra is a popular tool for performing bruteforce attacks. You need a wordlist of potential passwords and the correct syntax for the target service.",
-          "hint_penalty": 20,
-          "order": 0
-        }
-      ],
       "incorrect_answer_limit": 5,
       "attachments": [],
       "max_score": 100,
       "expected_commands": ["hydra"],
       "commands_required": true
+    },
+    {
+      "title": "Enter Found Password",
+      "level_type": "QUESTION_LEVEL",
+      "order": 1,
+      "estimated_duration": 10,
+      "minimal_possible_solve_time": 1,
+      "questions": [
+        {
+          "question_type": "SAQ",
+          "text": "Enter the password you found through the bruteforce attack.",
+          "points": 100,
+          "penalty": 0,
+          "order": 0,
+          "answer_required": true,
+          "correct_answers": ["viettel@123"]
+        }
+      ]
     }
   ],
-  "estimated_duration": 30,
+  "estimated_duration": 40,
   "variant_sandboxes": false
 }
