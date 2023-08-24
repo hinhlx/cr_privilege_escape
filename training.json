@@ -12,7 +12,9 @@
       "order": 0,
       "estimated_duration": 30,
       "minimal_possible_solve_time": 10,
+      "answer": null
       "answer_variable_name": "bruteforce_password",
+      "variant_answers" : true,
       "content": "In this level, your task is to perform a bruteforce attack to guess the password of the target user. The answer is the correct password you find.",
       "solution": "Use a tool like 'hydra' to perform a dictionary attack on the target service with the desired username. For example: 'hydra -l target_user -P wordlist.txt target_service://target_ip:target_port'.",
       "incorrect_answer_limit": 5,
