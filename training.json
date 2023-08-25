@@ -12,7 +12,7 @@
       "order": 0,
       "estimated_duration": 30,
       "minimal_possible_solve_time": 10,
-      "answer": "viettel@123"
+      "answer": "viettel@123",
       "answer_variable_name": null,
       "variant_answers" : false,
       "content": "In this level, your task is to perform a bruteforce attack to guess the password of the target user. The answer is the correct password you find. Username: user, Password: Password123",
