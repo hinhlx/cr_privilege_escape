@@ -1,6 +1,6 @@
 {
   "title": "Bruteforce Attack Lab",
-  "description": "Test your skills with a bruteforce attack. Username: user, Password: Password123",
+  "description": "Test your skills with a bruteforce attack.",
   "prerequisites": [],
   "outcomes": ["Performing a successful bruteforce attack"],
   "state": "UNRELEASED",
