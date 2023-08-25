@@ -36,7 +36,7 @@
       "max_score" : 100,
       "variant_answers" : true,
       "reference_solution" : [ ],
-      "commands_required" : no
+      "commands_required": false
     }
 
   ],
