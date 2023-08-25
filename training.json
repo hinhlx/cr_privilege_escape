@@ -25,7 +25,7 @@
     },
     {
       "title": "Submit Bruteforce Result",
-      "level_type": "ASSESSMENT_LEVEL",
+      "level_type": "TRAINING_LEVEL",
       "order": 1,
       "estimated_duration": 5,
       "minimal_possible_solve_time": null,
