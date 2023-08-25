@@ -29,25 +29,16 @@
       "order": 1,
       "estimated_duration": 5,
       "minimal_possible_solve_time": null,
-      "questions": [
-        {
-          "question_type": "FFQ",
-          "text": "What is the password you successfully found using the bruteforce attack?",
-          "points": 100,
-          "penalty": 0,
-          "order": 0,
-          "answer_required": true,
-          "choices" : [ {
-            "text" : "viettel@123",
-            "correct" : true,
-            "order" : 0
-          } ]
-
-        }
-      ],
-      "instructions": "Please answer the question with the password you successfully found using the bruteforce attack.",
-      "assessment_type": "QUESTIONNAIRE"
+      "answer" : null,
+      "answer_variable_name" : "viettel@123",
+      "incorrect_answer_limit" : 10,
+      "attachments" : [ ],
+      "max_score" : 100,
+      "variant_answers" : true,
+      "reference_solution" : [ ],
+      "commands_required" : no
     }
+
   ],
   "estimated_duration": 35,
   "variant_sandboxes": false
