@@ -27,6 +27,7 @@ networks:
 
   - name: client-switch
     cidr: 192.168.30.0/24
+    accessible_by_user: True
 
 net_mappings:
     - host: server
