@@ -34,7 +34,7 @@
 
 - name: Create Setuid Shell Program
   copy:
-    dest: /usr/local/bin/rootshell
+    dest: /usr/local/bin/rootshell.c
     content: |
       #include <stdio.h>
       #include <stdlib.h>
