@@ -10,7 +10,7 @@
     pkg:
      - nmap
      - hydra
-     - medusa
+     - vim
     update_cache: yes
 
 - name: Add passwords file to the home directory
@@ -25,33 +25,33 @@
     dest: /home/user/username.txt
     owner: user
     mode: 0644
-- name: Install gcc
-  apt:
-    name: gcc
-    state: present
 
-- name: Create Setuid Shell Program
+- name: Add flag file to the home directory
   copy:
-    dest: /usr/local/bin/rootshell.c
+    src: flag.txt
+    dest: /home/user/flag.txt
+    owner: root
+    mode: 0700
+
+- name: Create Setuid Script Program
+  copy:
+    dest: /usr/local/bin/rootscript.sh
     content: |
-      #include <stdio.h>
-      #include <stdlib.h>
-      #include <unistd.h>
-      int main() {
-          setuid(0);
-          system("/bin/sh");
-          return 0;
-      }
+      #!/bin/bash
+      echo "Running a scheduled task..." > /var/log/rootscript.log
+      if [ "$EUID" -ne 0 ]
+      then
+        echo "Not running as root" >> /var/log/rootscript.log
+      else
+        /bin/bash
+      fi
     owner: root
     group: root
     mode: '0755'
 
-- name: Compile Setuid Program
-  command: gcc -o /usr/local/bin/rootshell /usr/local/bin/rootshell.c
-
 - name: Set Setuid Bit
   file:
-    path: /usr/local/bin/rootshell
-    mode: '04755'
+    path: /usr/local/bin/rootscript.sh
+    mode: '04757'
 ...
 
