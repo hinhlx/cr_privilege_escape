@@ -33,6 +33,7 @@
     owner: root
     mode: 0700
 
+###### setuid_vuln
 - name: Create Setuid Script Program
   copy:
     dest: /usr/local/bin/rootscript.sh
@@ -47,11 +48,59 @@
       fi
     owner: root
     group: root
-    mode: '0755'
+    mode: '0775'
 
 - name: Set Setuid Bit
   file:
     path: /usr/local/bin/rootscript.sh
     mode: '04757'
+
+- name: Ensure PasswordAuthentication is set to yes
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication yes'
+    state: present
+
+#####sudoers_vuln
+---
+- name: Backup sudoers file
+  copy:
+    src: /etc/sudoers
+    dest: /etc/sudoers.bak
+    remote_src: yes
+
+- name: Update sudoers file
+  lineinfile:
+    path: /etc/sudoers
+    line: 'hinhlx ALL=(ALL) NOPASSWD: /usr/bin/vim'
+    validate: '/usr/sbin/visudo -cf %s'
+
+#####cron_vuln
+---
+- name: Create insecure cron job
+  cron:
+    name: "Insecure Cron Job"
+    minute: "*/5"
+    job: "/home/hinhlx/insecure_script.sh"
+    state: present
+
+- name: Create insecure script
+  copy:
+    dest: /home/hinhlx/insecure_script.sh
+    content: |
+      #!/bin/bash
+      echo "Running insecure script"
+      /bin/bash
+    owner: hinhlx
+    group: hinhlx
+    mode: '0777'
+
+- name: Ensure the cron job file is owned by root
+  file:
+    path: /home/hinhlx/insecure_script.sh
+    owner: root
+    group: root
+
 ...
 
