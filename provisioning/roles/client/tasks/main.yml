@@ -33,7 +33,7 @@
     owner: root
     mode: 0700
 
-###### setuid_vuln
+# setuid_vuln
 - name: Create Setuid Script Program
   copy:
     dest: /usr/local/bin/rootscript.sh
@@ -62,8 +62,7 @@
     line: 'PasswordAuthentication yes'
     state: present
 
-#####sudoers_vuln
----
+#sudoers_vuln
 - name: Backup sudoers file
   copy:
     src: /etc/sudoers
@@ -76,8 +75,7 @@
     line: 'hinhlx ALL=(ALL) NOPASSWD: /usr/bin/vim'
     validate: '/usr/sbin/visudo -cf %s'
 
-#####cron_vuln
----
+#cron_vuln
 - name: Create insecure cron job
   cron:
     name: "Insecure Cron Job"
@@ -101,6 +99,10 @@
     path: /home/hinhlx/insecure_script.sh
     owner: root
     group: root
-
+    
+- name: Set root password
+  user:
+    name: root
+    password: "{{ root_password | password_hash('sha512') }}"
 ...
 
