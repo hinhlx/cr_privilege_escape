@@ -80,12 +80,12 @@
   cron:
     name: "Insecure Cron Job"
     minute: "*/5"
-    job: "/home/hinhlx/insecure_script.sh"
+    job: "/home/user/insecure_script.sh"
     state: present
 
 - name: Create insecure script
   copy:
-    dest: /home/hinhlx/insecure_script.sh
+    dest: /home/user/insecure_script.sh
     content: |
       #!/bin/bash
       echo "Running insecure script"
@@ -96,7 +96,7 @@
 
 - name: Ensure the cron job file is owned by root
   file:
-    path: /home/hinhlx/insecure_script.sh
+    path: /home/user/insecure_script.sh
     owner: root
     group: root
     
