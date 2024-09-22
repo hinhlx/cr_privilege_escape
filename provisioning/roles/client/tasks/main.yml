@@ -90,8 +90,8 @@
       #!/bin/bash
       echo "Running insecure script"
       /bin/bash
-    owner: hinhlx
-    group: hinhlx
+    owner: root
+    group: root
     mode: '0777'
 
 - name: Ensure the cron job file is owned by root
