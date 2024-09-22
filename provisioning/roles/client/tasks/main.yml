@@ -76,30 +76,38 @@
     validate: '/usr/sbin/visudo -cf %s'
 
 #cron_vuln
+
+- name: Ensure /home/hinhlx directory exists
+  file:
+    path: /home/hinhlx
+    state: directory
+    owner: hinhlx
+    group: hinhlx
+    mode: '0755'
+
 - name: Create insecure cron job
   cron:
     name: "Insecure Cron Job"
     minute: "*/5"
-    job: "/home/user/insecure_script.sh"
+    job: "/home/hinhlx/insecure_script.sh"
     state: present
 
 - name: Create insecure script
   copy:
-    dest: /home/user/insecure_script.sh
+    dest: /home/hinhlx/insecure_script.sh
     content: |
       #!/bin/bash
       echo "Running insecure script"
       /bin/bash
     owner: root
     group: root
-    mode: '0777'
-
+    mode: '0777'    
 - name: Ensure the cron job file is owned by root
   file:
     path: /home/user/insecure_script.sh
     owner: root
     group: root
-    
+
 - name: Set root password
   user:
     name: root
