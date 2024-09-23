@@ -93,28 +93,37 @@
     group: hinhlx
     mode: '0755'
 
-- name: Create insecure cron job
-  cron:
-    name: "Insecure Cron Job"
-    minute: "*/5"
-    job: "/home/hinhlx/insecure_script.sh"
-    state: present
+- name: Ensure /home/user directory exists
+  file:
+    path: /home/user
+    state: directory
+    owner: user
+    group: user
+    mode: '0755'
 
 - name: Create insecure script
   copy:
-    dest: /home/hinhlx/insecure_script.sh
+    dest: /home/user/insecure_script.sh
     content: |
       #!/bin/bash
       echo "Running insecure script"
       /bin/bash
     owner: root
     group: root
-    mode: '0777'    
+    mode: '0777'
+
 - name: Ensure the cron job file is owned by root
   file:
     path: /home/user/insecure_script.sh
     owner: root
     group: root
+
+- name: Create insecure cron job
+  cron:
+    name: "Insecure Cron Job"
+    minute: "*/5"
+    job: "/home/user/insecure_script.sh"
+    state: present
 
 - name: Set root password
   user:
