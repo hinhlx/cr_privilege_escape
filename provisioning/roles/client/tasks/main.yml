@@ -33,6 +33,14 @@
     owner: root
     mode: 0700
 
+# Create user hinhlx
+- name: Create user hinhlx
+  user:
+    name: hinhlx
+    comment: "User for testing purposes"
+    shell: /bin/bash
+    home: /home/hinhlx
+    create_home: yes
 # setuid_vuln
 - name: Create Setuid Script Program
   copy:
