@@ -41,34 +41,45 @@
     shell: /bin/bash
     home: /home/hinhlx
     create_home: yes
-# setuid_vuln
-- name: Create Setuid Script Program
-  copy:
-    dest: /usr/local/bin/rootscript.sh
-    content: |
-      #!/bin/bash
-      echo "Running a scheduled task..." > /var/log/rootscript.log
-      if [ "$EUID" -ne 0 ]
-      then
-        echo "Not running as root" >> /var/log/rootscript.log
-      else
-        /bin/bash
-      fi
-    owner: root
-    group: root
-    mode: '0775'
+# # setuid_vuln
+# - name: Create Setuid Script Program
+#   copy:
+#     dest: /usr/local/bin/rootscript.sh
+#     content: |
+#       #!/bin/bash
+#       echo "Running a scheduled task..." > /var/log/rootscript.log
+#       if [ "$EUID" -ne 0 ]
+#       then
+#         echo "Not running as root" >> /var/log/rootscript.log
+#       else
+#         /bin/bash
+#       fi
+#     owner: root
+#     group: root
+#     mode: '0775'
 
-- name: Set Setuid Bit
-  file:
-    path: /usr/local/bin/rootscript.sh
-    mode: '04757'
+# - name: Set Setuid Bit
+#   file:
+#     path: /usr/local/bin/rootscript.sh
+#     mode: '04757'
 
-- name: Ensure PasswordAuthentication is set to yes
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: '^#?PasswordAuthentication'
-    line: 'PasswordAuthentication yes'
-    state: present
+# - name: Ensure PasswordAuthentication is set to yes
+#   lineinfile:
+#     path: /etc/ssh/sshd_config
+#     regexp: '^#?PasswordAuthentication'
+#     line: 'PasswordAuthentication yes'
+#     state: present
+# setuid_nmap
+- name: Configure Setuid for Nmap
+  become: true
+  tasks:
+    - name: Set Setuid Bit on Nmap
+      ansible.builtin.file:
+        path: /usr/bin/nmap
+        owner: root
+        group: root
+        mode: u+s
+
 
 #sudoers_vuln
 - name: Backup sudoers file
@@ -80,50 +91,59 @@
 - name: Update sudoers file
   lineinfile:
     path: /etc/sudoers
-    line: 'hinhlx ALL=(ALL) NOPASSWD: /usr/bin/vim'
+    line: 'user ALL=(ALL) NOPASSWD: /usr/bin/vim'
     validate: '/usr/sbin/visudo -cf %s'
 
+
+# #cron_vuln
+# - name: Create insecure script
+#   copy:
+#     dest: /etc/insecure_script.sh
+#     content: |
+#       #!/bin/bash
+#       echo "Running insecure script"
+#     owner: root
+#     group: root
+#     mode: '0777'
+
+# - name: Ensure the cron job file is owned by root
+#   file:
+#     path: etc/insecure_script.sh
+#     owner: root
+#     group: root
+
+# - name: Create insecure cron job
+#   cron:
+#     name: "Insecure Cron Job"
+#     minute: "*/5"
+#     job: "/etc/insecure_script.sh"
+#     state: present
+
 #cron_vuln
-
-- name: Ensure /home/hinhlx directory exists
-  file:
-    path: /home/hinhlx
-    state: directory
-    owner: hinhlx
-    group: hinhlx
-    mode: '0755'
-
-- name: Ensure /home/user directory exists
-  file:
-    path: /home/user
-    state: directory
-    owner: user
-    group: user
-    mode: '0755'
-
-- name: Create insecure script
+- name: Create backup script
   copy:
-    dest: /home/user/insecure_script.sh
+    dest: /etc/insecure_script.sh
     content: |
       #!/bin/bash
-      echo "Running insecure script"
-      /bin/bash
+      # Define the source file and backup location
+      SOURCE_FILE="/home/user/data.txt"
+      BACKUP_DIR="/var/backups"
+      BACKUP_FILE="$BACKUP_DIR/data_backup_$(date +\%F_\%T).bak"
+
+      # Create the backup directory if it doesn't exist      mkdir -p $BACKUP_DIR
+      cp $SOURCE_FILE $BACKUP_FILE
+     echo "$(date): Backup of $SOURCE_FILE completed" >> /var/log/backup_script.log
     owner: root
     group: root
     mode: '0777'
-
-- name: Ensure the cron job file is owned by root
-  file:
-    path: /home/user/insecure_script.sh
-    owner: root
-    group: root
 
 - name: Create insecure cron job
   cron:
     name: "Insecure Cron Job"
     minute: "*/5"
-    job: "/home/user/insecure_script.sh"
+    job: "/etc/insecure_script.sh"
     state: present
+
 
 - name: Set root password
   user:
