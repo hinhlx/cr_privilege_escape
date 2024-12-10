@@ -72,13 +72,12 @@
 # setuid_nmap
 - name: Configure Setuid for Nmap
   become: true
-  tasks:
-    - name: Set Setuid Bit on Nmap
-      ansible.builtin.file:
-        path: /usr/bin/nmap
-        owner: root
-        group: root
-        mode: u+s
+  ansible.builtin.file:
+    path: /usr/bin/nmap
+    owner: root
+    group: root
+    mode: '4755'
+
 
 
 #sudoers_vuln
@@ -94,30 +93,6 @@
     line: 'user ALL=(ALL) NOPASSWD: /usr/bin/vim'
     validate: '/usr/sbin/visudo -cf %s'
 
-
-# #cron_vuln
-# - name: Create insecure script
-#   copy:
-#     dest: /etc/insecure_script.sh
-#     content: |
-#       #!/bin/bash
-#       echo "Running insecure script"
-#     owner: root
-#     group: root
-#     mode: '0777'
-
-# - name: Ensure the cron job file is owned by root
-#   file:
-#     path: etc/insecure_script.sh
-#     owner: root
-#     group: root
-
-# - name: Create insecure cron job
-#   cron:
-#     name: "Insecure Cron Job"
-#     minute: "*/5"
-#     job: "/etc/insecure_script.sh"
-#     state: present
 
 #cron_vuln
 - name: Create backup script
