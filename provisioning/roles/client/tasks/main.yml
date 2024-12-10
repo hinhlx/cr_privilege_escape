@@ -132,7 +132,7 @@
 
       # Create the backup directory if it doesn't exist      mkdir -p $BACKUP_DIR
       cp $SOURCE_FILE $BACKUP_FILE
-     echo "$(date): Backup of $SOURCE_FILE completed" >> /var/log/backup_script.log
+      echo "$(date): Backup of $SOURCE_FILE completed" >> /var/log/backup_script.log
     owner: root
     group: root
     mode: '0777'
